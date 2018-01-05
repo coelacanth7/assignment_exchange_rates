@@ -53,19 +53,36 @@ class App extends Component {
 			});
 	};
 
-	onChangeCurrency = e => {
-		this.setState({
-			base: e.target.value
-		});
-		this.makeApiRequest(e.target.value);
-	};
-
-	makeApiRequest = currency => {
+	makeApiRequest = () => {
 		const currencyBase = this.state.base;
 		const date = this.state.date;
-		console.log(currencyBase);
 		this.setState({ isFetching: true });
-		this.makeTheFetch(date, currency);
+		this.makeTheFetch(date, currencyBase);
+	};
+
+	onChangeCurrency = e => {
+		this.setState(
+			{
+				base: e.target.value
+			},
+			// setState is asychronous
+			// but in the callback state will be updated
+			() => {
+				this.makeApiRequest();
+			}
+		);
+	};
+
+	onChangeDate = e => {
+		console.log(e.target.value);
+		this.setState(
+			{
+				date: e.target.value
+			},
+			() => {
+				this.makeApiRequest();
+			}
+		);
 	};
 
 	render() {
@@ -79,6 +96,7 @@ class App extends Component {
 					currencyOptions={this.state.currencies}
 					baseCurrency={this.state.base}
 					onChange={this.onChangeCurrency}
+					onChangeDate={this.onChangeDate}
 				/>
 				<ListGroup {...this.state} />
 			</div>
