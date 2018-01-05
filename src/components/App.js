@@ -21,39 +21,16 @@ class App extends Component {
 	componentDidMount() {
 		this.setState({ isFetching: true });
 		// basic api call
-		fetch("https://api.fixer.io/latest")
-			.then(response => response.json())
-			.then(json => {
-				let data = Object.keys(json.rates).map(
-					el => `${el}: ${json.rates[el]}`
-				);
-
-				this.setState({
-					currencies: Object.keys(json.rates),
-					data: data,
-					base: json.base,
-					date: json.date,
-					isFetching: false
-				});
-			})
-			.catch(error => {
-				console.log(error);
-				this.setState({
-					isFetching: false,
-					error
-				});
-			});
+		this.makeTheFetch("latest");
 	}
 
-	makeApiRequestForCurrency = e => {
-		const option = e.target;
-		const currencyBase = this.state.base;
+	makeTheFetch = (date, currency) => {
+		let url = `https://api.fixer.io/${date}?base=${currency}`;
+		if (!currency) {
+			url = `https://api.fixer.io/${date}`;
+		}
 
-		console.log("currencyBase", currencyBase);
-
-		this.setState({ isFetching: true });
-
-		fetch(`https://api.fixer.io/latest?base=${currencyBase}`)
+		fetch(url)
 			.then(response => response.json())
 			.then(json => {
 				let data = Object.keys(json.rates).map(
@@ -81,7 +58,14 @@ class App extends Component {
 		this.setState({
 			base: e.target.value
 		});
-		this.makeApiRequestForCurrency(e);
+		this.makeApiRequest();
+	};
+
+	makeApiRequest = () => {
+		const currencyBase = this.state.base;
+		const date = this.state.date;
+		this.setState({ isFetching: true });
+		this.makeTheFetch(date, currencyBase);
 	};
 
 	render() {
@@ -95,7 +79,6 @@ class App extends Component {
 					currencyOptions={this.state.currencies}
 					baseCurrency={this.state.base}
 					onChange={this.onChangeCurrency}
-					// makeApiRequest={this.makeApiRequest}
 				/>
 				<ListGroup {...this.state} />
 			</div>
