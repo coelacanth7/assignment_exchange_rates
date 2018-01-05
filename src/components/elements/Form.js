@@ -2,7 +2,7 @@ import React from "react";
 import InputGroup from "./InputGroup";
 import Select from "./Select";
 
-const Form = ({ currencyOptions, onChange, baseCurrency, makeApiRequest }) => {
+const Form = ({ currencyOptions, onChange, baseCurrency }) => {
 	//hard code currencies up front
 	// const currencyOptions = [
 	// 	"AUD",
@@ -47,7 +47,7 @@ const Form = ({ currencyOptions, onChange, baseCurrency, makeApiRequest }) => {
 					options={currencyOptions}
 					value={baseCurrency}
 					onChange={onChange}
-					makeApiRequest={makeApiRequest}
+					// makeApiRequest={makeApiRequest}
 				/>
 			</InputGroup>
 		</form>
