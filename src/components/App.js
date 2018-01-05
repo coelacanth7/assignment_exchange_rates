@@ -20,7 +20,6 @@ class App extends Component {
 
 	componentDidMount() {
 		this.setState({ isFetching: true });
-		// basic api call
 		this.makeTheFetch("latest");
 	}
 
@@ -58,14 +57,15 @@ class App extends Component {
 		this.setState({
 			base: e.target.value
 		});
-		this.makeApiRequest();
+		this.makeApiRequest(e.target.value);
 	};
 
-	makeApiRequest = () => {
+	makeApiRequest = currency => {
 		const currencyBase = this.state.base;
 		const date = this.state.date;
+		console.log(currencyBase);
 		this.setState({ isFetching: true });
-		this.makeTheFetch(date, currencyBase);
+		this.makeTheFetch(date, currency);
 	};
 
 	render() {
