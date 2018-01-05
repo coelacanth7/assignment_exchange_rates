@@ -1,7 +1,7 @@
 import React from "react";
 
 const Select = props => {
-	const { options, ...restOfProps } = props;
+	const { options, value, ...restOfProps } = props;
 	const optionElements = options.map(option => (
 		<option key={option} value={option}>
 			{option}
@@ -10,6 +10,9 @@ const Select = props => {
 
 	return (
 		<select className="form-control" {...restOfProps}>
+			<option key={value} value={value}>
+				{value}
+			</option>
 			{optionElements}
 		</select>
 	);
