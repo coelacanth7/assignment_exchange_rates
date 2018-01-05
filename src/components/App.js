@@ -11,8 +11,12 @@ class App extends Component {
 		this.state = {
 			currencies: [],
 			data: [],
+			json: {},
 			base: "EUR",
 			date: "",
+			amount: 0,
+			convertTo: "USD",
+			result: null,
 			isFetching: false,
 			error: null
 		};
@@ -39,6 +43,7 @@ class App extends Component {
 				this.setState({
 					currencies: Object.keys(json.rates),
 					data: data,
+					json: json.rates,
 					base: json.base,
 					date: json.date,
 					isFetching: false
@@ -73,6 +78,24 @@ class App extends Component {
 		);
 	};
 
+	onChangeConverter = e => {
+		e.preventDefault();
+		this.setState(
+			{
+				[e.target.name]: e.target.value
+			},
+			() => {
+				const amount = this.state.amount;
+				const convertTo = this.state.json[this.state.convertTo];
+				const result = convertTo * amount;
+				console.log(amount, convertTo);
+				this.setState({
+					result
+				});
+			}
+		);
+	};
+
 	render() {
 		return (
 			<div className="App">
@@ -81,10 +104,13 @@ class App extends Component {
 					lead="Using an API for foriegn exhange rates"
 				/>
 				<Form
-					currencyOptions={this.state.currencies}
-					baseCurrency={this.state.base}
 					onChange={this.onChange}
+					onChangeConverter={this.onChangeConverter}
+					{...this.state}
 				/>
+				<br />
+				<br />
+				<hr />
 				<ListGroup {...this.state} />
 			</div>
 		);
