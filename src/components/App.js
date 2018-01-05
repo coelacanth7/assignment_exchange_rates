@@ -88,7 +88,6 @@ class App extends Component {
 				const amount = this.state.amount;
 				const convertTo = this.state.json[this.state.convertTo];
 				const result = convertTo * amount;
-				console.log(amount, convertTo);
 				this.setState({
 					result
 				});
