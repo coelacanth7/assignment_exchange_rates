@@ -3,7 +3,7 @@ import InputGroup from "./InputGroup";
 import Select from "./Select";
 import Input from "./Input";
 
-const Form = ({ currencyOptions, onChange, baseCurrency, onChangeDate }) => {
+const Form = ({ currencyOptions, onChange, baseCurrency }) => {
 	return (
 		<form>
 			<h3>form</h3>
@@ -16,7 +16,7 @@ const Form = ({ currencyOptions, onChange, baseCurrency, onChangeDate }) => {
 				/>
 			</InputGroup>
 			<InputGroup>
-				<Input name="date" type="date" onChange={onChangeDate} />
+				<Input name="date" type="date" onChange={onChange} />
 			</InputGroup>
 		</form>
 	);

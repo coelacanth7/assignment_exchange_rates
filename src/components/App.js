@@ -60,25 +60,13 @@ class App extends Component {
 		this.makeTheFetch(date, currencyBase);
 	};
 
-	onChangeCurrency = e => {
+	onChange = e => {
 		this.setState(
 			{
-				base: e.target.value
+				[e.target.name]: e.target.value
 			},
 			// setState is asychronous
 			// but in the callback state will be updated
-			() => {
-				this.makeApiRequest();
-			}
-		);
-	};
-
-	onChangeDate = e => {
-		console.log(e.target.value);
-		this.setState(
-			{
-				date: e.target.value
-			},
 			() => {
 				this.makeApiRequest();
 			}
@@ -95,8 +83,7 @@ class App extends Component {
 				<Form
 					currencyOptions={this.state.currencies}
 					baseCurrency={this.state.base}
-					onChange={this.onChangeCurrency}
-					onChangeDate={this.onChangeDate}
+					onChange={this.onChange}
 				/>
 				<ListGroup {...this.state} />
 			</div>
